@@ -3,6 +3,8 @@ $(function() {
   const name = $('#name');
   const title = $('#title');
   const otherJobTitle = $('#other-title');
+  const designSelect = $('#design');
+  const colorSelect = $('#colors-js-puns');
 
   //Focus on first field on load
   name.focus();
@@ -16,6 +18,16 @@ $(function() {
       otherJobTitle.fadeIn();
     } else {
       otherJobTitle.fadeOut();
+    }
+  });
+
+  designSelect.on('change', () => {
+    if (designSelect.val() == 'js puns') {
+      console.log('show js pun shirts only');
+    } else if (designSelect.val() == 'heart js') {
+      console.log('show js heart shirts only');
+    } else {
+      console.log('show all options');
     }
   });
 });
