@@ -5,6 +5,7 @@ $(function() {
   const otherJobTitle = $('#other-title');
   const designSelect = $('#design');
   const colorSelect = $('#colors-js-puns');
+  const paymentSelect = $('#payment');
 
   //Focus on first field on load
   name.focus();
@@ -28,6 +29,14 @@ $(function() {
       console.log('show js heart shirts only');
     } else {
       console.log('show all options');
+    }
+  });
+
+  paymentSelect.on('change', () => {
+    const selectValue = paymentSelect.val();
+    const creditCard = $('#credit-card');
+    const paypalDiv = $()
+    if (selectValue == 'credit card') {
     }
   });
 });
