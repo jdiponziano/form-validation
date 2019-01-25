@@ -4,7 +4,6 @@ $(function() {
   const $title = $('#title');
   const $otherJobTitle = $('#other-title');
   const $designSelect = $('#design');
-  const $colorSelect = $('#colors-js-puns');
   const $paymentSelect = $('#payment');
 
   //Focus on first field on load
@@ -22,21 +21,30 @@ $(function() {
     }
   });
 
+  //Change t-shirt color options based on design selected
   $designSelect.on('change', () => {
-    $jsPunShirts = $();
+    $jsPunShirts = $('#colors-js-puns option:contains("JS Puns")');
+    $heartJsShirts = $('#colors-js-puns option:contains("JS shirt")');
     if ($designSelect.val() == 'js puns') {
-      console.log('show js pun shirts only');
+      $heartJsShirts.attr('hidden', true);
+      $heartJsShirts.first().attr('selected', false);
+      $jsPunShirts.attr('hidden', false);
+      $jsPunShirts.first().attr('selected', 'selected');
     } else if ($designSelect.val() == 'heart js') {
-      console.log('show js heart shirts only');
+      $jsPunShirts.attr('hidden', true);
+      $jsPunShirts.first().attr('selected', false);
+      $heartJsShirts.attr('hidden', false);
+      $heartJsShirts.first().attr('selected', 'selected');
     } else {
-      console.log('show all options');
+      $jsPunShirts.attr('hidden', false);
+      $heartJsShirts.attr('hidden', false);
     }
   });
 
   $paymentSelect.on('change', () => {
     const $selectValue = paymentSelect.val();
     const $creditCard = $('#credit-card');
-    const $paypalDiv = $()
+    const $paypalDiv = $();
     if ($selectValue == 'credit card') {
     }
   });
