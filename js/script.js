@@ -4,6 +4,8 @@ $(function() {
   const $title = $('#title');
   const $otherJobTitle = $('#other-title');
   const $designSelect = $('#design');
+  const $activities = $('.activities');
+  const $checkboxes = $('input[type=checkbox]');
   const $paymentSelect = $('#payment');
 
   //Focus on first field on load
@@ -39,6 +41,30 @@ $(function() {
       $jsPunShirts.attr('hidden', false);
       $heartJsShirts.attr('hidden', false);
     }
+  });
+
+  //Sum up cost of workshops and display total
+  let $cost = 0;
+  let costString = '<p>Total Cost: $<span class="cost">' + $cost + '</span></p>';
+  $activities.append(costString);
+  $checkboxes.on('change', e => {
+    const $target = $(e.target);
+    const $course = $target.attr('name');
+    const $costText = $('.cost');
+    if ($target.is(':checked')) {
+      if ($course == 'all') {
+        $cost = $cost + 200;
+      } else {
+        $cost = $cost + 100;
+      }
+    } else {
+      if ($course == 'all') {
+        $cost = $cost - 200;
+      } else {
+        $cost = $cost - 100;
+      }
+    }
+    $costText.text($cost);
   });
 
   $paymentSelect.on('change', () => {
