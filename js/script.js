@@ -69,29 +69,25 @@ $(function() {
     $costText.text($cost);
   });
 
+  //Disable Course fields if at the same time
   $checkboxes.on('change', e => {
     const $target = $(e.target);
     const $content = $target.parent().text();
     const $stringTest = $target.parent().siblings('label');
     const regex = /— (\w*) \d[a|p]m-\d\d?pm/;
-    const tuesday1 = /Tuesday 9am-12pm/i;
-    const tuesday2 = /Tuesday 1pm-4pm/i;
-    console.log($content.match(regex));
-    $stringTest.each(function(index) {
+    $stringTest.each(function() {
       let $this = $(this);
       let $optionText = $this.text();
       let $optionInput = $this.find('input');
-      if (tuesday1.test($content) && tuesday1.test($optionText)) {
-        if ($target.is(':checked')) {
-          $optionInput.prop('disabled', 'true');
-        } else {
-          $optionInput.removeAttr('disabled');
-        }
-      } else if (tuesday2.test($content) && tuesday2.test($optionText)) {
-        if ($target.is(':checked')) {
-          $optionInput.prop('disabled', 'true');
-        } else {
-          $optionInput.removeAttr('disabled');
+      const contentMatch = $content.match(regex);
+      const optionMatch = $optionText.match(regex);
+      if (contentMatch && optionMatch) {
+        if ($content.match(regex)[0] === $optionText.match(regex)[0]) {
+          if ($target.is(':checked')) {
+            $optionInput.prop('disabled', 'true');
+          } else {
+            $optionInput.removeAttr('disabled');
+          }
         }
       }
     });
