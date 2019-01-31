@@ -7,24 +7,22 @@ $(function() {
   const $activities = $('.activities');
   const $checkboxes = $('input[type=checkbox]');
   const $paymentSelect = $('#payment');
+  const $creditCard = $('#credit-card');
+  const $paypalDiv = $paymentSelect.next().next();
+  const $bitcoinDiv = $paymentSelect
+    .next()
+    .next()
+    .next();
   let $cost = 0;
   let costString =
     '<p>Total Cost: $<span class="cost">' + $cost + '</span></p>';
-
-  $activities.append(costString);
-
-  //Focus on first field on load
-  $name.focus();
-
-  //Hide field on load
-  $otherJobTitle.hide();
-
+  
   $title.on('change', () => {
-    selectValue = title.val();
+    const selectValue = $title.val();
     if (selectValue == 'other') {
-      otherJobTitle.fadeIn();
+      $otherJobTitle.fadeIn();
     } else {
-      otherJobTitle.fadeOut();
+      $otherJobTitle.fadeOut();
     }
   });
 
@@ -93,11 +91,35 @@ $(function() {
     });
   });
 
+  //Show hide payment options
   $paymentSelect.on('change', () => {
-    const $selectValue = paymentSelect.val();
-    const $creditCard = $('#credit-card');
-    const $paypalDiv = $();
+    const $selectValue = $paymentSelect.val();
     if ($selectValue == 'credit card') {
+      $creditCard.show();
+      $paypalDiv.hide();
+      $bitcoinDiv.hide();
+    } else if ($selectValue == 'paypal') {
+      $paypalDiv.show();
+      $creditCard.hide();
+      $bitcoinDiv.hide();
+    } else {
+      $bitcoinDiv.show();
+      $creditCard.hide();
+      $paypalDiv.hide();
     }
+  });
+
+  //Initialize page
+  $activities.append(costString);
+
+  //Focus on first field on load
+  $name.focus();
+
+  //Hide field on load
+  $otherJobTitle.hide();
+
+  //Hide payment fields
+  $.each([$creditCard, $paypalDiv, $bitcoinDiv], function(t) {
+    $(this).hide();
   });
 });
