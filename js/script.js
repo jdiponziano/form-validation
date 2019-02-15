@@ -49,7 +49,7 @@ $(function() {
   }
 
   function fieldBlankError(selector) {
-    if (selector.val() === "") {
+    if ($(selector).val() === "") {
       const $label = selector.prev('label').text();
       return `<li><b>${$label}</b> Field must not be blank.</li>`;
     }
@@ -126,24 +126,26 @@ $(function() {
   //Show hide payment options
   $paymentSelect.on('change', () => {
     const $selectValue = $paymentSelect.val();
-    if ($selectValue == 'credit card') {
-      $creditCard.show();
-      $paypalDiv.hide();
-      $bitcoinDiv.hide();
-    } else if ($selectValue == 'paypal') {
-      $paypalDiv.show();
-      $creditCard.hide();
-      $bitcoinDiv.hide();
-    } else {
-      $bitcoinDiv.show();
-      $creditCard.hide();
-      $paypalDiv.hide();
+    switch ($selectValue) {
+      case 'credit card':
+        showHideCcFields($creditCard, $paypalDiv, $bitcoinDiv);
+        break;
+      case 'paypal':
+        showHideCcFields($paypalDiv, $bitcoinDiv, $creditCard);
+        break;
+      case 'bitcoin':
+        showHideCcFields($bitcoinDiv, $paypalDiv, $creditCard);
+        break;
+      default:
+        $bitcoinDiv.hide();
+        $creditCard.hide();
+        $paypalDiv.hide();
     }
   });
 
   //Validate required fields on submit
   $form.on('submit', (e) => {
-    let errorMsg = '<ul class="error-message>';
+    let errorMsg = '<ul class="error-message">';
     const $emailVal = $email.val();
     const $selectValue = $paymentSelect.val();
 
@@ -162,16 +164,16 @@ $(function() {
       const $zipVal = $ccZip.val(); 
       const $cvVal = $ccCvv.val();
       const $ccVal = $ccNum.val();
+      errorMsg += fieldBlankError($ccNum);
       errorMsg += fieldBlankError($ccZip);
-      errorMsg += fieldBlankError($cvVal);
-      errorMsg += fieldBlankError($ccVal);
-      if (!isValidCcNumber($ccVal)) {
+      errorMsg += fieldBlankError($ccCvv);
+      if (!isValidCcNumber($ccVal) && $ccVal !== "") {
         errorMsg += '<li><b>Credit Card Number:</b> You must enter a valid 13-16 digit credit card number.</li>';
       }
-      if (!isValidZip($zipVal)) {
+      if (!isValidZip($zipVal) && $zipVal !== "") {
         errorMsg += '<li><b>Zip Code:</b> You must enter a valid 5 digit zip code.</li>';
       }
-      if (!isCV($cvVal)) {
+      if (!isCV($cvVal) && $cvVal !== "") {
         errorMsg += '<li><b>CVV:</b> You must enter a valid 3 digit CVV code.</li>';
       }
     }
