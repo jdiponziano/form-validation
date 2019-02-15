@@ -55,6 +55,12 @@ $(function() {
     }
   }
 
+  function showHideCcFields(field1, field2, field3) {
+    field1.show();
+    field2.hide();
+    field3.hide();
+  }
+
   //Change t-shirt color options based on design selected
   $designSelect.on('change', () => {
     $jsPunShirts = $('#colors-js-puns option:contains("JS Puns")');
@@ -160,6 +166,11 @@ $(function() {
       e.preventDefault();
       errorMsg += '<li><b>Register Activies:</b> You must register for at least 1 activity.</li>';
     } 
+
+    if ($paymentSelect.val() === "select_method") {
+      errorMsg += '<li><b>Select Payment Method:</b> You must select a valid payment method.</li>';
+    }
+    
     if ($selectValue == 'credit card') {
       const $zipVal = $ccZip.val(); 
       const $cvVal = $ccCvv.val();
