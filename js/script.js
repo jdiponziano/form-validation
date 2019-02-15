@@ -170,7 +170,7 @@ $(function() {
     if ($paymentSelect.val() === "select_method") {
       errorMsg += '<li><b>Select Payment Method:</b> You must select a valid payment method.</li>';
     }
-    
+
     if ($selectValue == 'credit card') {
       const $zipVal = $ccZip.val(); 
       const $cvVal = $ccCvv.val();
@@ -190,6 +190,9 @@ $(function() {
     }
     errorMsg += '</ul>';
     $form.before(errorMsg);
+    $('html, body').animate({
+      scrollTop: $('.error-message').offset().top
+    }, 500);
   });
 
   //Initialize page
