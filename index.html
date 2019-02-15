@@ -18,12 +18,16 @@
               
       <fieldset>         
         <legend>Basic Info</legend>
+        <div class="field-group">
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="user_name">
+        </div>
         
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="user_name">
-        
-        <label for="mail">Email:</label>
-        <input type="email" id="mail" name="user_email">
+        <div class="field-group">
+          <label for="mail">Email:</label>
+          <input type="email" id="mail" name="user_email">
+          <span class="tooltip">Email address is not valid. Example: john@gmail.com</span>
+        </div>
         
         <label for="title">Job Role</label>
         <select id="title" name="user_title">
@@ -96,19 +100,22 @@
 
         <div id="credit-card" class="credit-card">
 
-          <div class="col-6 col">
+          <div class="col-6 col field-group">
             <label for="cc-num">Card Number:</label>
-        	  <input id="cc-num" name="user_cc-num" type="text">
+            <input id="cc-num" name="user_cc-num" type="text">
+            <span class="tooltip">CC number must be 13-16 digits.</span>
           </div>
 
-          <div class="col-3 col">
+          <div class="col-3 col field-group">
             <label for="zip">Zip Code:</label>
             <input id="zip" name="user_zip" type="text"> 
+            <span class="tooltip">Zip needs 5 digits.</span>
           </div>
 
-          <div class="col-3 col">
+          <div class="col-3 col field-group">
             <label for="cvv">CVV:</label>
             <input id="cvv" name="user_cvv" type="text"> 
+            <span class="tooltip">CV is 3 digit number.</span>
           </div>
 
           <label for="exp-month">Expiration Date:</label>

@@ -55,10 +55,34 @@ $(function() {
     }
   }
 
+  function showHideTshirts(showField, hideField) {
+    hideField.attr('hidden', true);
+    hideField.first().attr('selected', false);
+    showField.attr('hidden', false);
+    showField.first().attr('selected', 'selected');
+  }
+
   function showHideCcFields(field1, field2, field3) {
     field1.show();
     field2.hide();
     field3.hide();
+  }
+
+  function showHideToolTip(show, element) {
+    if (show) {
+      element.show();
+    } else {
+      element.hide();
+    }
+  }
+
+  function createToolTipListener(e, validator) {
+    const $this = $(e.target);
+    const text = $this.val();
+    const valid = validator(text);
+    const showTip = text !== "" && !valid;
+    const tooltip = $this.next('span');
+    showHideToolTip(showTip, tooltip);
   }
 
   //Change t-shirt color options based on design selected
@@ -67,16 +91,10 @@ $(function() {
     $heartJsShirts = $('#colors-js-puns option:contains("JS shirt")');
     if ($designSelect.val() == 'js puns') {
       $colorSelect.show();
-      $heartJsShirts.attr('hidden', true);
-      $heartJsShirts.first().attr('selected', false);
-      $jsPunShirts.attr('hidden', false);
-      $jsPunShirts.first().attr('selected', 'selected');
+      showHideTshirts($jsPunShirts, $heartJsShirts);
     } else if ($designSelect.val() == 'heart js') {
       $colorSelect.show();
-      $jsPunShirts.attr('hidden', true);
-      $jsPunShirts.first().attr('selected', false);
-      $heartJsShirts.attr('hidden', false);
-      $heartJsShirts.first().attr('selected', 'selected');
+      showHideTshirts($heartJsShirts, $jsPunShirts);
     } else {
       $colorSelect.hide();
       $jsPunShirts.attr('hidden', false);
@@ -148,6 +166,12 @@ $(function() {
         $paypalDiv.hide();
     }
   });
+
+  //Validate fields while typing
+  $email.on('keyup', function (e) { createToolTipListener(e, validEmail) });
+  $ccNum.on('keyup', function (e) { createToolTipListener(e, isValidCcNumber) });
+  $ccZip.on('keyup', function (e) { createToolTipListener(e, isValidZip) });
+  $ccCvv.on('keyup', function (e) { createToolTipListener(e, isCV) });
 
   //Validate required fields on submit
   $form.on('submit', (e) => {
