@@ -225,8 +225,11 @@ $(function() {
   //Focus on first field on load
   $name.focus();
 
+  //Select credit card payment by default
+  $paymentSelect.find('option[value="credit card"]').attr('selected', true).prop('selected', true);
+
   //Hide fields on load
-  $.each([$otherJobTitle, $colorSelect, $creditCard, $paypalDiv, $bitcoinDiv], function(t) {
+  $.each([$otherJobTitle, $colorSelect, $paypalDiv, $bitcoinDiv], function(t) {
     $(this).hide();
   });
 });
