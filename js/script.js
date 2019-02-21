@@ -53,7 +53,7 @@ $(function() {
       const $label = selector.prev('label').text();
       return `<li><b>${$label}</b> Field must not be blank.</li>`;
     } else {
-      return;
+      return '';
     }
   }
 
