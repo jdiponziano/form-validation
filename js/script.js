@@ -52,6 +52,8 @@ $(function() {
     if ($(selector).val() === "") {
       const $label = selector.prev('label').text();
       return `<li><b>${$label}</b> Field must not be blank.</li>`;
+    } else {
+      return;
     }
   }
 
@@ -89,6 +91,7 @@ $(function() {
   $designSelect.on('change', () => {
     $jsPunShirts = $('#colors-js-puns option:contains("JS Puns")');
     $heartJsShirts = $('#colors-js-puns option:contains("JS shirt")');
+    $designSelect.find('option[value="select_theme"]').attr('disabled', true).prop('disabled', true);
     if ($designSelect.val() == 'js puns') {
       $colorSelect.show();
       showHideTshirts($jsPunShirts, $heartJsShirts);
@@ -175,10 +178,12 @@ $(function() {
 
   //Validate required fields on submit
   $form.on('submit', (e) => {
-    let errorMsg = '<ul class="error-message">';
+    $('.error-message').remove();
+    let errorMsg = '';
     const $emailVal = $email.val();
     const $selectValue = $paymentSelect.val();
-
+    
+    errorMsg = '<ul class="error-message">';
     errorMsg += fieldBlankError($name);
 
     if (!validEmail($emailVal)) {
@@ -191,7 +196,13 @@ $(function() {
       errorMsg += '<li><b>Register Activies:</b> You must register for at least 1 activity.</li>';
     } 
 
+    if ($designSelect.val() === "select_theme") {
+      e.preventDefault();
+      errorMsg += '<li><b>Select Theme:</b> You must select a tshirt theme.</li>';
+    }
+
     if ($paymentSelect.val() === "select_method") {
+      e.preventDefault();
       errorMsg += '<li><b>Select Payment Method:</b> You must select a valid payment method.</li>';
     }
 
@@ -203,12 +214,15 @@ $(function() {
       errorMsg += fieldBlankError($ccZip);
       errorMsg += fieldBlankError($ccCvv);
       if (!isValidCcNumber($ccVal) && $ccVal !== "") {
+        e.preventDefault();
         errorMsg += '<li><b>Credit Card Number:</b> You must enter a valid 13-16 digit credit card number.</li>';
       }
       if (!isValidZip($zipVal) && $zipVal !== "") {
+        e.preventDefault();
         errorMsg += '<li><b>Zip Code:</b> You must enter a valid 5 digit zip code.</li>';
       }
       if (!isCV($cvVal) && $cvVal !== "") {
+        e.preventDefault();
         errorMsg += '<li><b>CVV:</b> You must enter a valid 3 digit CVV code.</li>';
       }
     }
