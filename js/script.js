@@ -32,6 +32,7 @@ $(function() {
     }
   });
 
+  //Regex Patterns to validate form fields
   function validEmail(email) {
     return /^[^@]+@[^@]+\.[a-z]+$/i.test(email);
   }
@@ -48,6 +49,7 @@ $(function() {
     return /^[0-9]{3}$/.test(cv);
   }
 
+  //Blank field errors
   function fieldBlankError(selector, e) {
     if ($(selector).val() === "") {
       const $label = selector.prev('label').text();
