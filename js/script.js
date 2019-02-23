@@ -48,9 +48,10 @@ $(function() {
     return /^[0-9]{3}$/.test(cv);
   }
 
-  function fieldBlankError(selector) {
+  function fieldBlankError(selector, e) {
     if ($(selector).val() === "") {
       const $label = selector.prev('label').text();
+      e.preventDefault();
       return `<li><b>${$label}</b> Field must not be blank.</li>`;
     } else {
       return '';
@@ -210,9 +211,9 @@ $(function() {
       const $zipVal = $ccZip.val(); 
       const $cvVal = $ccCvv.val();
       const $ccVal = $ccNum.val();
-      errorMsg += fieldBlankError($ccNum);
-      errorMsg += fieldBlankError($ccZip);
-      errorMsg += fieldBlankError($ccCvv);
+      errorMsg += fieldBlankError($ccNum, e);
+      errorMsg += fieldBlankError($ccZip, e);
+      errorMsg += fieldBlankError($ccCvv, e);
       if (!isValidCcNumber($ccVal) && $ccVal !== "") {
         e.preventDefault();
         errorMsg += '<li><b>Credit Card Number:</b> You must enter a valid 13-16 digit credit card number.</li>';
