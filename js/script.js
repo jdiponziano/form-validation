@@ -185,7 +185,7 @@ $(function() {
     const $selectValue = $paymentSelect.val();
     
     errorMsg = '<ul class="error-message">';
-    errorMsg += fieldBlankError($name);
+    errorMsg += fieldBlankError($name, e);
 
     if (!validEmail($emailVal)) {
       e.preventDefault();
